@@ -1,4 +1,14 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:2.4.1'
+    }
+}
+
 apply plugin: 'com.android.application'
+apply plugin: 'retrolambda'
 
 android {
     compileSdkVersion 21
@@ -16,6 +26,16 @@ android {
             minifyEnabled false
         }
     }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -26,4 +46,18 @@ dependencies {
     compile dataLayer
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.android.support:recyclerview-v7:21.0.0'
+    compile 'com.squareup.picasso:picasso:2.3.2'
+    compile 'com.jakewharton:butterknife:5.1.1'
+    compile 'com.squareup.dagger:dagger:1.2.1'
+
+    compile 'io.reactivex:rxandroid:0.23.0'
+}
+
+retrolambda {
+    jdk "/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home"
+    oldJdk "/Library/Java/JavaVirtualMachines/jdk1.7.0_71.jdk/Contents/Home"
+    javaVersion JavaVersion.VERSION_1_7
 }
