@@ -1,17 +1,21 @@
-package com.sloydev.sevibus;
+package com.sloydev.sevibus.presentation.view.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.sloydev.sevibus.R;
 
-public class MainActivity extends Activity {
+import butterknife.ButterKnife;
+
+
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.inject(this);
     }
 
 
