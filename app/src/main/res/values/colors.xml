@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="transparent">#00ffffff</color>
+
+    <color name="material_black">#de000000</color>
+    <color name="hint_black">#bbbbbb</color>
+
+    <color name="background_dark">#ececec</color>
+
+    <!-- Shadows -->
+    <color name="shadow_start">#33000000</color>
+    <color name="shadow_dark_start">#66000000</color>
+
+    <!-- Gray scale -->
+    <color name="gray_10">#1a1a1a</color>
+    <color name="gray_20">#ff333333</color>
+    <color name="gray_30">#4d4d4d</color>
+    <color name="gray_40">#ff666666</color>
+    <color name="gray_50">#808080</color>
+    <color name="gray_60">#9a9a9a</color>
+    <color name="gray_70">#bbbbbb</color>
+    <color name="gray_80">#cccccc</color>
+    <color name="gray_90">#e6e6e6</color>
+    <color name="white">#ffffff</color>
+    <color name="white_disabled">#aaffffff</color>
+
+    <!-- Drawer -->
+    <color name="drawer_background">#ffffff</color>
+    <color name="drawer_text">#de000000</color>
+
+
+    <color name="new_shot_bottom">#09000000</color>
+
+    <color name="watching">#4d4d4d</color>
+    <color name="not_watching">#bbbbbb</color>
+
+    <color name="error">#ffcc0000</color>
+
+    <color name="toolbar_closable">#7f7f7f</color>
+    <color name="default_photo_background">#d9d9d9</color>
+
+    <color name="switch_disabled">#ececec</color>
+    <color name="black">#000000</color>
+
+</resources>

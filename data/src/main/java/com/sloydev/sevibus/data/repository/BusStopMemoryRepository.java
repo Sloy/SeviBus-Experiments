@@ -6,11 +6,13 @@ import com.sloydev.sevibus.domain.repository.BusStopRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class BusStopMemoryRepository implements BusStopRepository {
 
     private final List<BusStop> busStops;
 
-    public BusStopMemoryRepository() {
+    @Inject public BusStopMemoryRepository() {
         this.busStops = new ArrayList<>();
         initializeMockData();
     }
