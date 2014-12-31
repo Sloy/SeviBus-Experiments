@@ -11,6 +11,12 @@
         <item name="android:textCursorDrawable">@null</item>
 
         <item name="toolbar">@style/ToolBar</item>
+        <item name="toolbarOffset">?actionBarSize</item>
+    </style>
+
+    <style name="SevibusTheme.ToolbarOverlay">
+        <item name="toolbar">@style/ToolBar.Overlay</item>
+        <item name="toolbarOffset">0dp</item>
     </style>
 
     <style name="ToolBar">
@@ -18,6 +24,10 @@
         <item name="theme">@style/ActionBarThemeOverlay</item>
         <item name="popupTheme">@style/Theme.AppCompat.Light</item>
         <item name="titleTextAppearance">@style/ActionBar.TitleText</item>
+    </style>
+
+    <style name="ToolBar.Overlay">
+        <item name="android:background">@color/transparent</item>
     </style>
 
     <style name="ActionBarThemeOverlay" parent="">
