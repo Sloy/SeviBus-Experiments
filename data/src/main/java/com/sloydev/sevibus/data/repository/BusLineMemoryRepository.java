@@ -27,7 +27,12 @@ public class BusLineMemoryRepository implements BusLineRepository {
     }
 
     @Override public List<BusLine> getBusLinesFromStop(Integer busStopNumber) {
-        return stopLineMap.get(busStopNumber);
+        List<BusLine> busLines = stopLineMap.get(busStopNumber);
+        if (busLines != null) {
+            return busLines;
+        } else {
+            return new ArrayList<>(0);
+        }
     }
 
     private void initializeMockData() {
