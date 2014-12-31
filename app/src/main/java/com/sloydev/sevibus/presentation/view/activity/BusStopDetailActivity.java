@@ -1,9 +1,11 @@
 package com.sloydev.sevibus.presentation.view.activity;
 
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.sloydev.sevibus.R;
+import com.sloydev.sevibus.domain.ArrivalTimes;
 import com.sloydev.sevibus.presentation.model.BusStopModel;
 import com.sloydev.sevibus.presentation.presenter.BusStopDetailPresenter;
 import com.sloydev.sevibus.presentation.view.BusStopDetailView;
@@ -51,5 +53,9 @@ public class BusStopDetailActivity extends BaseToolbarActivity implements BusSto
     @Override public void renderDetails(BusStopModel busStopModel) {
         name.setText(busStopModel.getName());
         number.setText(String.valueOf(busStopModel.getNumber()));
+    }
+
+    @Override public void updateArrival(ArrivalTimes arrival) {
+        Log.d("Arrival", arrival.toString());
     }
 }
