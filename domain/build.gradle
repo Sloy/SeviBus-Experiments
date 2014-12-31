@@ -16,9 +16,3 @@ dependencies {
     compile 'com.squareup.dagger:dagger:1.2.2'
     compile 'com.squareup.dagger:dagger-compiler:1.2.2' //TODO provided (apt)
 }
-
-retrolambda {
-    jdk "/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home"
-    oldJdk "/Library/Java/JavaVirtualMachines/jdk1.7.0_71.jdk/Contents/Home"
-    javaVersion JavaVersion.VERSION_1_7
-}
