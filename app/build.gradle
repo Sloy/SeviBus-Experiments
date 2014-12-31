@@ -56,9 +56,3 @@ dependencies {
 
     compile 'io.reactivex:rxandroid:0.23.0'
 }
-
-retrolambda {
-    jdk "/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home"
-    oldJdk "/Library/Java/JavaVirtualMachines/jdk1.7.0_71.jdk/Contents/Home"
-    javaVersion JavaVersion.VERSION_1_7
-}
