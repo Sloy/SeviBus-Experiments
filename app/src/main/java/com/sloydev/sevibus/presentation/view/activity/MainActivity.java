@@ -30,6 +30,7 @@ public class MainActivity extends BaseActivity {
     @InjectView(R.id.list) ListView listView;
 
     @Inject @Deprecated BusStopRepository busStopRepository;
+    private BusStopSimpleAdapter listAdapter;
 
     @Override protected int getLayoutResource() {
         return R.layout.activity_main;
@@ -46,13 +47,17 @@ public class MainActivity extends BaseActivity {
     @Deprecated //TODO just for testing, this will be removed
     private void showAllStops() {
         List<BusStop> allBusStops = busStopRepository.getAllBusStops();
-        listView.setAdapter(new BusStopSimpleAdapter(allBusStops));
+        listAdapter = new BusStopSimpleAdapter(allBusStops);
+        listView.setAdapter(listAdapter);
     }
 
     @OnItemClick(R.id.list)
     public void openStop(int position) {
-        //TODO intent
-        startActivity(new Intent(this, BusStopDetailActivity.class));
+        BusStop busStop = listAdapter.getItem(position);
+        Integer busStopNumber = busStop.getNumber();
+        Intent launchIntent = new Intent(this, BusStopDetailActivity.class);
+        launchIntent.putExtra(BusStopDetailActivity.EXTRA_STOP_NUMBER, busStopNumber);
+        startActivity(launchIntent);
     }
 
     @Override

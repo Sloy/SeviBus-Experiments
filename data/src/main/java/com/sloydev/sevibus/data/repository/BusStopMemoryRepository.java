@@ -37,11 +37,11 @@ public class BusStopMemoryRepository implements BusStopRepository {
     private void initializeMockData() {
         BusStop b1 = new BusStop();
         b1.setNumber(50);
-        b1.setName("Cruz Roja");
+        b1.setName("Avenida La Cruz Roja (Clínica)");
 
         BusStop b2 = new BusStop();
-        b2.setNumber(63);
-        b2.setName("Escuela Técnica Superior de Ingeniería Informática");
+        b2.setNumber(62);
+        b2.setName("Reina Mercedes (E.S.I. Informática)");
 
         addBusStop(b1);
         addBusStop(b2);

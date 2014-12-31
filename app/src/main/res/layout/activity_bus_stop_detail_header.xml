@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/bus_stop_header"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/primary"
+    android:orientation="vertical"
+    android:paddingBottom="32dp"
+    android:paddingLeft="72dp"
+    android:paddingRight="16dp"
+    android:paddingTop="?actionBarSize"
+    tools:showIn="@layout/activity_bus_stop_detail">
+
+    <TextView
+        android:id="@+id/bus_stop_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/icons"
+        android:textSize="27sp"
+        tools:text="Avenida La Cruz Roja (Clínica)"/>
+
+    <TextView
+        android:id="@+id/bus_stop_number_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/bus_stop_number"
+        android:text="Parada nº"
+        android:textColor="@color/primary_light"
+        android:textSize="19sp"
+        />
+
+    <TextView
+        android:id="@+id/bus_stop_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bus_stop_name"
+        android:layout_marginLeft="4dp"
+        android:layout_toRightOf="@+id/bus_stop_number_title"
+        android:textColor="@color/primary_light"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        tools:text="50"
+        />
+</RelativeLayout>

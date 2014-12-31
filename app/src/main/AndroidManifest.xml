@@ -19,8 +19,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.view.activity.BusStopDetailActivity"
-                  />
+        <activity
+            android:name=".presentation.view.activity.BusStopDetailActivity"
+            android:theme="@style/SevibusTheme.ToolbarOverlay"
+            />
     </application>
 
 </manifest>
