@@ -1,6 +1,7 @@
 package com.sloydev.sevibus.domain.interactor;
 
 import com.sloydev.sevibus.domain.BusStop;
+import com.sloydev.sevibus.domain.exception.BusStopNotFoundException;
 import com.sloydev.sevibus.domain.repository.BusStopRepository;
 
 import javax.inject.Inject;
@@ -17,7 +18,12 @@ public class BusStopDetailInteractor implements Interactor {
 
     public Observable<BusStop> loadBusStopDetail(Integer busStopNumber) {
         return Observable.create(subscriber -> {
-            subscriber.onNext(getBusStop(busStopNumber));
+            BusStop busStop = getBusStop(busStopNumber);
+            if (busStop == null) {
+                //TODO should this be thrown by the repository itself?
+                throw BusStopNotFoundException.create(busStopNumber);
+            }
+            subscriber.onNext(busStop);
             subscriber.onCompleted();
         });
     }
