@@ -2,6 +2,7 @@ package com.sloydev.sevibus.presentation.presenter;
 
 import com.sloydev.sevibus.domain.interactor.ArrivalTimesInteractor;
 import com.sloydev.sevibus.domain.interactor.BusStopDetailInteractor;
+import com.sloydev.sevibus.presentation.model.mapper.ArrivalTimesModelMapper;
 import com.sloydev.sevibus.presentation.model.mapper.BusStopModelMapper;
 import com.sloydev.sevibus.presentation.view.BusStopDetailView;
 
@@ -15,14 +16,16 @@ public class BusStopDetailPresenter implements Presenter {
     private final BusStopDetailInteractor busStopDetailInteractor;
     private final ArrivalTimesInteractor arrivalTimesInteractor;
     private final BusStopModelMapper busStopModelMapper;
+    private final ArrivalTimesModelMapper arrivalTimesModelMapper;
 
     private BusStopDetailView busStopDetailView;
     private Integer busStopNumber;
 
-    @Inject public BusStopDetailPresenter(BusStopDetailInteractor busStopDetailInteractor, ArrivalTimesInteractor arrivalTimesInteractor, BusStopModelMapper busStopModelMapper) {
+    @Inject public BusStopDetailPresenter(BusStopDetailInteractor busStopDetailInteractor, ArrivalTimesInteractor arrivalTimesInteractor, BusStopModelMapper busStopModelMapper, ArrivalTimesModelMapper arrivalTimesModelMapper) {
         this.busStopDetailInteractor = busStopDetailInteractor;
         this.arrivalTimesInteractor = arrivalTimesInteractor;
         this.busStopModelMapper = busStopModelMapper;
+        this.arrivalTimesModelMapper = arrivalTimesModelMapper;
     }
 
     public void initialize(BusStopDetailView busStopDetailView, Integer busStopNumber) {
@@ -44,7 +47,7 @@ public class BusStopDetailPresenter implements Presenter {
         arrivalTimesInteractor.loadArrivals(busStopNumber)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                        //TODO .map() model
-                .subscribe(arrival -> busStopDetailView.updateArrival(arrival));
+                .map(arrivalTimesModelMapper::transform)
+                .subscribe(arrivalModel -> busStopDetailView.updateArrival(arrivalModel));
     }
 }

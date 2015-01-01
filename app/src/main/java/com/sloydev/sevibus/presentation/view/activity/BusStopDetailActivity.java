@@ -1,14 +1,14 @@
 package com.sloydev.sevibus.presentation.view.activity;
 
 import android.support.v7.app.ActionBar;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.sloydev.sevibus.R;
-import com.sloydev.sevibus.domain.ArrivalTimes;
+import com.sloydev.sevibus.presentation.model.ArrivalTimesModel;
 import com.sloydev.sevibus.presentation.model.BusStopModel;
 import com.sloydev.sevibus.presentation.presenter.BusStopDetailPresenter;
 import com.sloydev.sevibus.presentation.view.BusStopDetailView;
+import com.sloydev.sevibus.presentation.view.component.ArrivalTimesDetailedView;
 
 import javax.inject.Inject;
 
@@ -21,6 +21,7 @@ public class BusStopDetailActivity extends BaseToolbarActivity implements BusSto
 
     @InjectView(R.id.bus_stop_name) TextView name;
     @InjectView(R.id.bus_stop_number) TextView number;
+    @InjectView(R.id.bus_stop_arrivals) ArrivalTimesDetailedView arrivals;
 
     @Inject BusStopDetailPresenter presenter;
 
@@ -55,7 +56,7 @@ public class BusStopDetailActivity extends BaseToolbarActivity implements BusSto
         number.setText(String.valueOf(busStopModel.getNumber()));
     }
 
-    @Override public void updateArrival(ArrivalTimes arrival) {
-        Log.d("Arrival", arrival.toString());
+    @Override public void updateArrival(ArrivalTimesModel arrival) {
+        arrivals.addArrival(arrival);
     }
 }

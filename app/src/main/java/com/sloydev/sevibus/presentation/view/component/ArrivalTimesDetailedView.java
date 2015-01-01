@@ -50,6 +50,7 @@ public class ArrivalTimesDetailedView extends LinearLayout {
     }
 
     public void addArrival(ArrivalTimesModel arrival) {
+        //TODO actualizar en vez de añadir siempre
         ArrivalDetailViewHolder newItemHolder = createViewHolder();
         bindData(newItemHolder, arrival);
         View itemView = newItemHolder.itemView;
@@ -64,7 +65,13 @@ public class ArrivalTimesDetailedView extends LinearLayout {
     private void bindData(ArrivalDetailViewHolder holder, ArrivalTimesModel arrival) {
         holder.lineBadge.setText(arrival.getLineName());
         holder.nextTime.setText(arrival.getNextBusTime());
-        holder.secondTime.setText(arrival.getSecondBusTime());
+        String secondBusTime = arrival.getSecondBusTime();
+        if (secondBusTime != null && !secondBusTime.isEmpty()) {
+            holder.secondTime.setText(secondBusTime);
+            holder.secondTime.setVisibility(VISIBLE);
+        } else {
+            holder.secondTime.setVisibility(GONE);
+        }
     }
 
     private void displayMockData() {

@@ -2,7 +2,11 @@
 <resources>
 
     <string name="app_name">SeviBus</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    
+    <string name="arrival_next_estimate_format">Próximo %d min</string>
+    <string name="arrival_second_estimate_format">Siguiente %d min</string>
+    <string name="arrival_imminent">Llegada inminente</string>
+    <string name="arrival_no_estimation">Sin estimación</string>
+    <string name="arrival_not_available">No disponible</string>
 
 </resources>

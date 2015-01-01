@@ -12,7 +12,7 @@ public class MockArrivalTimesRepository implements ArrivalTimesRepository {
 
     @Override public ArrivalTimes getArrivalsForBusStopAndLine(Integer busStopNumber, String lineName) {
         try {
-            Thread.sleep(500);
+            Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -21,7 +21,7 @@ public class MockArrivalTimesRepository implements ArrivalTimesRepository {
         arrivals.setBusStopNumber(busStopNumber);
         arrivals.setBusLineName(lineName);
         arrivals.setNextBus(getNextBus());
-        arrivals.setSecondBus(getNextBus());
+        arrivals.setSecondBus(getSecondBus());
         return arrivals;
     }
 
@@ -29,6 +29,13 @@ public class MockArrivalTimesRepository implements ArrivalTimesRepository {
         ArrivalTimes.BusArrival busArrival = new ArrivalTimes.BusArrival(ArrivalTimes.Status.ESTIMATE);
         busArrival.setDistanceInMeters(100);
         busArrival.setTimeInMinutes(4);
+        return busArrival;
+    }
+
+    private ArrivalTimes.BusArrival getSecondBus() {
+        ArrivalTimes.BusArrival busArrival = new ArrivalTimes.BusArrival(ArrivalTimes.Status.ESTIMATE);
+        busArrival.setDistanceInMeters(1428);
+        busArrival.setTimeInMinutes(15);
         return busArrival;
     }
 }
