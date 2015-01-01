@@ -63,5 +63,6 @@ public class BusLineMemoryRepository implements BusLineRepository {
         busLineList.add(L16);
         busLineList.add(LA1);
         stopLineMap.put(50, Arrays.asList(L01, L11, L12, L16, LA1));
+        stopLineMap.put(62, Arrays.asList(L01, LA1));
     }
 }
