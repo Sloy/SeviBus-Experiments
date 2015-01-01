@@ -25,7 +25,7 @@ public class BusStopDetailInteractorTest {
         MockitoAnnotations.initMocks(this);
         busStopDetailInteractor = new BusStopDetailInteractor(busStopRepository);
     }
-    
+
 
     @Test
     public void busStopReturnedWhenFound() {

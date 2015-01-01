@@ -10,5 +10,10 @@ android:
   licenses:
     - android-sdk-license-5be876d5
 
+before_script:
+  - export "JAVA_HOME=/usr/lib/jvm/java-8-oracle/"
+  - export "JAVA8_HOME=/usr/lib/jvm/java-8-oracle/"
+  - export "JAVA7_HOME=/usr/lib/jvm/java-7-oracle/"
+
 script:
   ./gradlew build
