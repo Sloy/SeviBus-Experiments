@@ -6,6 +6,8 @@
               android:orientation="vertical"
               tools:context=".presentation.view.activity.BusStopDetailActivity">
 
-    <include layout="@layout/activity_bus_stop_detail_header"/>
+    <include layout="@layout/include_bus_stop_detail_header"/>
+
+    <include layout="@layout/include_bus_stop_detail_arrivals"/>
 
 </LinearLayout>

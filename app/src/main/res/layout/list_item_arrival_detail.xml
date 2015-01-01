@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:paddingBottom="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp">
+
+    <TextView
+        android:id="@+id/arrival_detail_line_badge"
+        android:layout_width="@dimen/arrival_detail_line_badge_size"
+        android:layout_height="@dimen/arrival_detail_line_badge_size"
+        android:background="@drawable/arrival_detail_line_badge_background"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center"
+        android:maxLines="1"
+        android:maxWidth="@dimen/arrival_detail_line_badge_size"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="01"
+        />
+
+    <TextView
+        android:id="@+id/arrival_detail_next_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/arrival_detail_line_badge"
+        android:alpha="0.74"
+        android:fontFamily="sans-serif-condensed"
+        android:maxLines="1"
+        android:textColor="@color/primary_text"
+        android:textSize="21sp"
+        tools:text="Próximo 9 minutos"/>
+
+    <TextView
+        android:id="@+id/arrival_detail_second_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/arrival_detail_next_time"
+        android:layout_below="@+id/arrival_detail_next_time"
+        android:alpha="0.6"
+        android:fontFamily="sans-serif-condensed"
+        android:textColor="@color/secondary_text"
+        android:textSize="14sp"
+        tools:text="Siguiente 24 minutos"/>
+</RelativeLayout>
