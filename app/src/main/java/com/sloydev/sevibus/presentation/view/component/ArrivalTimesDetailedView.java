@@ -110,7 +110,12 @@ public class ArrivalTimesDetailedView extends LinearLayout {
 
         addArrival(arrivalTimesModel);
         addArrival(arrivalTimesModel);
-        addArrival(arrivalTimesModel);
+
+        ArrivalTimesModel arrivalNotAvailable = new ArrivalTimesModel();
+        arrivalNotAvailable.setLineName("A1");
+        arrivalNotAvailable.setNextBusTime("No disponible");
+        addArrival(arrivalNotAvailable);
+
         addArrival(arrivalTimesModel);
     }
 
