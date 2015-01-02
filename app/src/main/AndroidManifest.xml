@@ -3,6 +3,8 @@
     package="com.sloydev.sevibus"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".presentation.SevibusApplication"
         android:allowBackup="true"
