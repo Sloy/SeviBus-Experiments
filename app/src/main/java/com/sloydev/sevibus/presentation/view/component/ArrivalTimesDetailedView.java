@@ -79,7 +79,7 @@ public class ArrivalTimesDetailedView extends LinearLayout {
             holder.secondTime.setText(secondBusTime);
             holder.secondTime.setVisibility(VISIBLE);
         } else {
-            holder.secondTime.setVisibility(GONE);
+            holder.secondTime.setVisibility(INVISIBLE);
         }
         setNextTimeStyle(holder);
     }
