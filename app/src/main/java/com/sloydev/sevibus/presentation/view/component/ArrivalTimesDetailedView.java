@@ -117,6 +117,15 @@ public class ArrivalTimesDetailedView extends LinearLayout {
         addArrival(arrivalNotAvailable);
 
         addArrival(arrivalTimesModel);
+
+        ArrivalTimesModel imminent = new ArrivalTimesModel();
+        imminent.setLineName("C2");
+        imminent.setNextBusTime("Llegada inminente");
+        imminent.setSecondBusTime("Siguiente 5 minutos");
+
+        addArrival(imminent);
+
+        addArrival(arrivalTimesModel);
     }
 
     class ArrivalDetailViewHolder extends RecyclerView.ViewHolder {
