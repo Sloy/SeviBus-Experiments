@@ -11,6 +11,9 @@ public class MockArrivalTimesRepository implements ArrivalTimesRepository {
     }
 
     @Override public ArrivalTimes getArrivalsForBusStopAndLine(Integer busStopNumber, String lineName) {
+        if (lineName.startsWith("A")) {
+            return nightArrival(busStopNumber, lineName);
+        }
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {
@@ -22,6 +25,13 @@ public class MockArrivalTimesRepository implements ArrivalTimesRepository {
         arrivals.setBusLineName(lineName);
         arrivals.setNextBus(getNextBus());
         arrivals.setSecondBus(getSecondBus());
+        return arrivals;
+    }
+
+    private ArrivalTimes nightArrival(Integer busStopNumber, String lineName) {
+        ArrivalTimes arrivals = new ArrivalTimes();
+        arrivals.setBusLineName(lineName);
+        arrivals.setBusStopNumber(busStopNumber);
         return arrivals;
     }
 
