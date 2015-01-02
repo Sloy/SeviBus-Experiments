@@ -4,6 +4,12 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.CharacterStyle;
+import android.text.style.StyleSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +18,9 @@ import android.widget.TextView;
 
 import com.sloydev.sevibus.R;
 import com.sloydev.sevibus.presentation.model.ArrivalTimesModel;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -72,7 +81,26 @@ public class ArrivalTimesDetailedView extends LinearLayout {
         } else {
             holder.secondTime.setVisibility(GONE);
         }
+        setNextTimeStyle(holder);
     }
+
+    private void setNextTimeStyle(ArrivalDetailViewHolder holder) {
+        String currentText = holder.nextTime.getText().toString();
+        Pattern numberPattern = Pattern.compile("(\\d+?)");
+        Matcher matcher = numberPattern.matcher(currentText);
+        if (matcher.find()) {
+            int start = matcher.start();
+            int end = matcher.end();
+
+            int bigTextSize = getResources().getDimensionPixelSize(R.dimen.arrival_detail_big_number);
+            CharacterStyle bigTextSpan = new AbsoluteSizeSpan(bigTextSize);
+
+            SpannableStringBuilder spanText = new SpannableStringBuilder(currentText);
+            spanText.setSpan(bigTextSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            holder.nextTime.setText(spanText);
+        }
+    }
+
 
     private void displayMockData() {
         ArrivalTimesModel arrivalTimesModel = new ArrivalTimesModel();

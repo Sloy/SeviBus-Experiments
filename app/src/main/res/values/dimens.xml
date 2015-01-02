@@ -3,4 +3,5 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="arrival_detail_line_badge_size">40dp</dimen>
+    <dimen name="arrival_detail_big_number">42dp</dimen>
 </resources>

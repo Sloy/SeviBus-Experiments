@@ -43,4 +43,7 @@
     <color name="switch_disabled">#ececec</color>
     <color name="black">#000000</color>
 
+    <color name="arrival_detail_primary">#696969</color>
+    <color name="arrival_detail_secondary">#a4a4a4</color>
+
 </resources>
