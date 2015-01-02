@@ -86,7 +86,7 @@ public class ArrivalTimesDetailedView extends LinearLayout {
 
     private void setNextTimeStyle(ArrivalDetailViewHolder holder) {
         String currentText = holder.nextTime.getText().toString();
-        Pattern numberPattern = Pattern.compile("(\\d+?)");
+        Pattern numberPattern = Pattern.compile("(\\d+)");
         Matcher matcher = numberPattern.matcher(currentText);
         if (matcher.find()) {
             int start = matcher.start();
