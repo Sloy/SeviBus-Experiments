@@ -8,5 +8,6 @@
     <string name="arrival_imminent">Llegada inminente</string>
     <string name="arrival_no_estimation">Sin estimación</string>
     <string name="arrival_not_available">No disponible</string>
+    <string name="arrival_loading">Cargando...</string>
 
 </resources>

@@ -8,6 +8,9 @@ public class ArrivalTimes {
     private BusArrival nextBus;
     private BusArrival secondBus;
 
+    private boolean loading;
+
+
     public boolean isAvailable() {
         return nextBus!= null && nextBus.status != Status.NOT_AVAILABLE;
     }
@@ -42,6 +45,14 @@ public class ArrivalTimes {
 
     public void setSecondBus(BusArrival secondBus) {
         this.secondBus = secondBus;
+    }
+
+    public boolean isLoading() {
+        return loading;
+    }
+
+    public void setLoading(boolean loading) {
+        this.loading = loading;
     }
 
     public enum Status {

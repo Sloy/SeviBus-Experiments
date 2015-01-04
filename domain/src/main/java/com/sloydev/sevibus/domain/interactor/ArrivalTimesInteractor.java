@@ -44,6 +44,7 @@ public class ArrivalTimesInteractor implements Interactor {
                     ArrivalTimes arrivalTimes = new ArrivalTimes();
                     arrivalTimes.setBusStopNumber(busStopNumber);
                     arrivalTimes.setBusLineName(busLine.getName());
+                    arrivalTimes.setLoading(true);
                     return arrivalTimes;
                 });
     }

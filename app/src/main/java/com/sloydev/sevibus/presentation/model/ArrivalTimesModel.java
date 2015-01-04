@@ -10,6 +10,8 @@ public class ArrivalTimesModel {
     private String secondBusTime;
     private String secondBusDistance;
 
+    private boolean loading;
+
     public String getLineName() {
         return lineName;
     }
@@ -48,5 +50,13 @@ public class ArrivalTimesModel {
 
     public void setSecondBusDistance(String secondBusDistance) {
         this.secondBusDistance = secondBusDistance;
+    }
+
+    public boolean isLoading() {
+        return loading;
+    }
+
+    public void setLoading(boolean loading) {
+        this.loading = loading;
     }
 }

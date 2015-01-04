@@ -15,6 +15,7 @@ public class ArrivalTimesModelMapper {
     private final String imminentArrivalText;
     private final String noEstimationText;
     private final String notAvailableText;
+    private final String loadingText;
 
     @Inject public ArrivalTimesModelMapper(Application application) {
         nextTimeEstimationFormat = application.getString(R.string.arrival_next_estimate_format);
@@ -22,13 +23,16 @@ public class ArrivalTimesModelMapper {
         imminentArrivalText = application.getString(R.string.arrival_imminent);
         noEstimationText = application.getString(R.string.arrival_no_estimation);
         notAvailableText = application.getString(R.string.arrival_not_available);
+        loadingText = application.getString(R.string.arrival_loading);
     }
 
     public ArrivalTimesModel transform(ArrivalTimes arrivalTimes) {
         ArrivalTimesModel arrivalTimesModel = new ArrivalTimesModel();
         arrivalTimesModel.setLineName(arrivalTimes.getBusLineName());
 
-        if (arrivalTimes.isAvailable()) {
+        if (arrivalTimes.isLoading()) {
+            setLoadingValues(arrivalTimes, arrivalTimesModel);
+        }else if (arrivalTimes.isAvailable()) {
             //TODO distance
             setAvailableValues(arrivalTimes, arrivalTimesModel);
         } else {
@@ -36,6 +40,11 @@ public class ArrivalTimesModelMapper {
         }
 
         return arrivalTimesModel;
+    }
+
+    private void setLoadingValues(ArrivalTimes arrivalTimes, ArrivalTimesModel arrivalTimesModel) {
+        arrivalTimesModel.setNextBusTime(loadingText);
+        arrivalTimesModel.setLoading(true);
     }
 
     private void setAvailableValues(ArrivalTimes arrivalTimes, ArrivalTimesModel arrivalTimesModel) {
