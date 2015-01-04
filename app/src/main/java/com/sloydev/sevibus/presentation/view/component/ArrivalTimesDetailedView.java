@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.sloydev.sevibus.R;
 import com.sloydev.sevibus.presentation.model.ArrivalTimesModel;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,6 +29,7 @@ import butterknife.InjectView;
 
 public class ArrivalTimesDetailedView extends LinearLayout {
     private LayoutInflater layoutInflater;
+    private Map<String, ArrivalDetailViewHolder> arrivalNameHolderMap;
 
     public ArrivalTimesDetailedView(Context context) {
         super(context);
@@ -52,6 +55,7 @@ public class ArrivalTimesDetailedView extends LinearLayout {
     private void init(Context context) {
         setOrientation(LinearLayout.VERTICAL);
         layoutInflater = LayoutInflater.from(context);
+        arrivalNameHolderMap = new HashMap<>();
 
         if (isInEditMode()) {
             displayMockData();
@@ -59,11 +63,14 @@ public class ArrivalTimesDetailedView extends LinearLayout {
     }
 
     public void addArrival(ArrivalTimesModel arrival) {
-        //TODO actualizar en vez de añadir siempre
-        ArrivalDetailViewHolder newItemHolder = createViewHolder();
-        bindData(newItemHolder, arrival);
-        View itemView = newItemHolder.itemView;
-        this.addView(itemView);
+        ArrivalDetailViewHolder itemHolder = arrivalNameHolderMap.get(arrival.getLineName());
+        if (itemHolder == null) {
+            itemHolder = createViewHolder();
+            View itemView = itemHolder.itemView;
+            this.addView(itemView);
+            arrivalNameHolderMap.put(arrival.getLineName(), itemHolder);
+        }
+        bindData(itemHolder, arrival);
     }
 
     private ArrivalDetailViewHolder createViewHolder() {
