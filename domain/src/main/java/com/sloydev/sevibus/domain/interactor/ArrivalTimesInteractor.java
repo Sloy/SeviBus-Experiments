@@ -22,17 +22,29 @@ public class ArrivalTimesInteractor implements Interactor {
     }
 
     public Observable<ArrivalTimes> loadArrivals(Integer busStopNumber) {
+        //TODO doesn't look very reactive, but how else I know lines for emptyArrivalTimes?
         List<BusLine> linesFromStop = getLinesFromStop(busStopNumber);
         return Observable.from(linesFromStop)
-                .map(busLine -> busLine.getName())
-                .map(lineName -> getArrivalsFrom(busStopNumber, lineName));
+                .map(BusLine::getName)
+                .flatMap(lineName -> getArrivals(busStopNumber, lineName))
+                .startWith(emptyArrivalTimes(busStopNumber, linesFromStop));
+    }
+
+    private Observable<ArrivalTimes> getArrivals(Integer busStopNumber, String lineName) {
+        return Observable.just(arrivalsRepository.getArrivalsForBusStopAndLine(busStopNumber, lineName));
     }
 
     private List<BusLine> getLinesFromStop(Integer busStopNumber) {
         return busLineRepository.getBusLinesFromStop(busStopNumber);
     }
 
-    private ArrivalTimes getArrivalsFrom(Integer busStopNumber, String lineName) {
-        return arrivalsRepository.getArrivalsForBusStopAndLine(busStopNumber, lineName);
+    private Observable<ArrivalTimes> emptyArrivalTimes(Integer busStopNumber, List<BusLine> linesFromStop) {
+        return Observable.from(linesFromStop)
+                .map(busLine -> {
+                    ArrivalTimes arrivalTimes = new ArrivalTimes();
+                    arrivalTimes.setBusStopNumber(busStopNumber);
+                    arrivalTimes.setBusLineName(busLine.getName());
+                    return arrivalTimes;
+                });
     }
 }

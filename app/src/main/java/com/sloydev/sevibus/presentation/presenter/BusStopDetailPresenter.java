@@ -2,6 +2,7 @@ package com.sloydev.sevibus.presentation.presenter;
 
 import com.sloydev.sevibus.domain.interactor.ArrivalTimesInteractor;
 import com.sloydev.sevibus.domain.interactor.BusStopDetailInteractor;
+import com.sloydev.sevibus.presentation.model.ArrivalTimesModel;
 import com.sloydev.sevibus.presentation.model.mapper.ArrivalTimesModelMapper;
 import com.sloydev.sevibus.presentation.model.mapper.BusStopModelMapper;
 import com.sloydev.sevibus.presentation.view.BusStopDetailView;
@@ -36,6 +37,7 @@ public class BusStopDetailPresenter implements Presenter {
     }
 
     private void loadBusStopDetails() {
+        busStopDetailView.showArrivals();
         busStopDetailInteractor.loadBusStopDetail(busStopNumber)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -48,6 +50,22 @@ public class BusStopDetailPresenter implements Presenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(arrivalTimesModelMapper::transform)
-                .subscribe(arrivalModel -> busStopDetailView.updateArrival(arrivalModel));
+                .subscribe(arrivalModel -> renderArrival(arrivalModel),
+                        error -> showViewConnectionError(error));
+    }
+
+    private void showViewConnectionError(Throwable error) {
+        busStopDetailView.hideArrivals();
+        busStopDetailView.showConnectionError();
+    }
+
+    private void renderArrival(ArrivalTimesModel arrivalModel) {
+        busStopDetailView.hideConnectionError();
+        busStopDetailView.updateArrival(arrivalModel);
+    }
+
+    public void retry() {
+        busStopDetailView.hideConnectionError();
+        this.loadBusStopDetails();
     }
 }
