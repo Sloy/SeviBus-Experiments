@@ -5,8 +5,6 @@ import com.sloydev.sevibus.domain.BusLine;
 import com.sloydev.sevibus.domain.repository.ArrivalTimesRepository;
 import com.sloydev.sevibus.domain.repository.BusLineRepository;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import rx.Observable;
@@ -22,17 +20,17 @@ public class ArrivalTimesInteractor implements Interactor {
     }
 
     public Observable<ArrivalTimes> loadArrivals(Integer busStopNumber) {
-        List<BusLine> linesFromStop = getLinesFromStop(busStopNumber);
-        return Observable.from(linesFromStop)
-                .map(busLine -> busLine.getName())
-                .map(lineName -> getArrivalsFrom(busStopNumber, lineName));
+        return Observable.just(busStopNumber)
+                .flatMap(this::getLinesFromStop)
+                .map(BusLine::getName)
+                .flatMap(lineName -> getArrivals(busStopNumber, lineName));
     }
 
-    private List<BusLine> getLinesFromStop(Integer busStopNumber) {
-        return busLineRepository.getBusLinesFromStop(busStopNumber);
+    private Observable<ArrivalTimes> getArrivals(Integer busStopNumber, String lineName) {
+        return Observable.just(arrivalsRepository.getArrivalsForBusStopAndLine(busStopNumber, lineName));
     }
 
-    private ArrivalTimes getArrivalsFrom(Integer busStopNumber, String lineName) {
-        return arrivalsRepository.getArrivalsForBusStopAndLine(busStopNumber, lineName);
+    private Observable<BusLine> getLinesFromStop(Integer busStopNumber) {
+        return Observable.from(busLineRepository.getBusLinesFromStop(busStopNumber));
     }
 }

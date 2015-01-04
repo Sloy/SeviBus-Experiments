@@ -1,6 +1,8 @@
 package com.sloydev.sevibus.data.repository;
 
+import com.sloydev.sevibus.data.exception.ArrivalTimesException;
 import com.sloydev.sevibus.domain.ArrivalTimes;
+import com.sloydev.sevibus.domain.exception.SevibusException;
 import com.sloydev.sevibus.domain.repository.ArrivalTimesRepository;
 
 import org.xml.sax.SAXException;
@@ -31,8 +33,8 @@ public class TussamArrivalTimesRepository implements ArrivalTimesRepository {
             populateArrivalTimes(arrivals, arrivalsInputStream);
             return arrivals;
         } catch (Exception e) {
-            //TODO
-            return null;
+            //TODO Log
+            throw new ArrivalTimesException(e, busStopNumber, lineName);
         }
     }
 
