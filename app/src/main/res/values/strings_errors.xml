@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="error_connection">Error de conexión</string>
+    <string name="error_view_title_default">Error</string>
+    <string name="error_view_retry">Reintentar</string>
+    <string name="error_oops">Oops</string>
+
+</resources>
