@@ -10,10 +10,15 @@ public interface BusStopDetailView {
 
     void showArrivals();
 
+    void clearArrivals();
+
     void hideArrivals();
 
     void showConnectionError();
 
     void hideConnectionError();
 
+    void showLoading();
+
+    void hideLoading();
 }

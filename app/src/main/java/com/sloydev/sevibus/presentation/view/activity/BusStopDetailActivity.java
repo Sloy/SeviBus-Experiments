@@ -1,5 +1,6 @@
 package com.sloydev.sevibus.presentation.view.activity;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.TextView;
@@ -17,7 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class BusStopDetailActivity extends BaseToolbarActivity implements BusStopDetailView {
+public class BusStopDetailActivity extends BaseToolbarActivity implements BusStopDetailView, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String EXTRA_STOP_NUMBER = "number";
 
@@ -27,6 +28,7 @@ public class BusStopDetailActivity extends BaseToolbarActivity implements BusSto
     @InjectView(R.id.bus_stop_arrivals_error) View errorView;
     @InjectView(R.id.error_title) TextView errorTitle;
     @InjectView(R.id.error_subtitle) TextView errorSubtitle;
+    @InjectView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefresh;
 
     @Inject BusStopDetailPresenter presenter;
 
@@ -36,6 +38,8 @@ public class BusStopDetailActivity extends BaseToolbarActivity implements BusSto
 
     @Override protected void initializeViews() {
         ButterKnife.inject(this);
+
+        swipeRefresh.setOnRefreshListener(this);
     }
 
     @Override protected void setupActionBar(ActionBar actionBar) {
@@ -61,6 +65,10 @@ public class BusStopDetailActivity extends BaseToolbarActivity implements BusSto
         presenter.retry();
     }
 
+    @Override public void onRefresh() {
+        presenter.refresh();
+    }
+
     @Override public void renderDetails(BusStopModel busStopModel) {
         name.setText(busStopModel.getName());
         number.setText(String.valueOf(busStopModel.getNumber()));
@@ -72,6 +80,10 @@ public class BusStopDetailActivity extends BaseToolbarActivity implements BusSto
 
     @Override public void showArrivals() {
         arrivals.setVisibility(View.VISIBLE);
+    }
+
+    @Override public void clearArrivals() {
+        arrivals.clear();
     }
 
     @Override public void hideArrivals() {
@@ -86,5 +98,13 @@ public class BusStopDetailActivity extends BaseToolbarActivity implements BusSto
 
     @Override public void hideConnectionError() {
         errorView.setVisibility(View.GONE);
+    }
+
+    @Override public void showLoading() {
+        // no-op
+    }
+
+    @Override public void hideLoading() {
+        swipeRefresh.setRefreshing(false);
     }
 }

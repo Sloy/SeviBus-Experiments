@@ -135,6 +135,11 @@ public class ArrivalTimesDetailedView extends LinearLayout {
         addArrival(arrivalTimesModel);
     }
 
+    public void clear() {
+        this.removeAllViews();
+        arrivalNameHolderMap.clear();
+    }
+
     class ArrivalDetailViewHolder extends RecyclerView.ViewHolder {
         @InjectView(R.id.arrival_detail_line_badge) TextView lineBadge;
         @InjectView(R.id.arrival_detail_next_time) TextView nextTime;

@@ -37,7 +37,6 @@ public class BusStopDetailPresenter implements Presenter {
     }
 
     private void loadBusStopDetails() {
-        busStopDetailView.showArrivals();
         busStopDetailInteractor.loadBusStopDetail(busStopNumber)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -46,15 +45,28 @@ public class BusStopDetailPresenter implements Presenter {
     }
 
     private void loadArrivalTimes() {
+        this.showViewLoading();
+        busStopDetailView.clearArrivals();
+        busStopDetailView.showArrivals();
         arrivalTimesInteractor.loadArrivals(busStopNumber)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(arrivalTimesModelMapper::transform)
                 .subscribe(arrivalModel -> renderArrival(arrivalModel),
-                        error -> showViewConnectionError(error));
+                        error -> showViewConnectionError(error),
+                        () -> hideViewLoading());
+    }
+
+    private void showViewLoading() {
+        busStopDetailView.showLoading();
+    }
+
+    private void hideViewLoading() {
+        busStopDetailView.hideLoading();
     }
 
     private void showViewConnectionError(Throwable error) {
+        this.hideViewLoading();
         busStopDetailView.hideArrivals();
         busStopDetailView.showConnectionError();
     }
@@ -66,6 +78,10 @@ public class BusStopDetailPresenter implements Presenter {
 
     public void retry() {
         busStopDetailView.hideConnectionError();
-        this.loadBusStopDetails();
+        this.loadArrivalTimes();
+    }
+
+    public void refresh() {
+        this.loadArrivalTimes();
     }
 }
