@@ -3,21 +3,32 @@ package com.sloydev.sevibus.data.repository;
 import com.sloydev.sevibus.domain.ArrivalTimes;
 import com.sloydev.sevibus.domain.repository.ArrivalTimesRepository;
 
+import java.util.Random;
+
 import javax.inject.Inject;
 
 public class MockArrivalTimesRepository implements ArrivalTimesRepository {
 
+    private static final float ERROR_PERCENTAGE = 0.15f;
+    private final Random random;
+
     @Inject public MockArrivalTimesRepository() {
+        random = new Random();
     }
 
     @Override public ArrivalTimes getArrivalsForBusStopAndLine(Integer busStopNumber, String lineName) {
-        if (lineName.startsWith("A")) {
-            return nightArrival(busStopNumber, lineName);
-        }
         try {
-            Thread.sleep(200);
+            Thread.sleep((long) (random.nextFloat() * 800.0f + 200));
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+
+        if (random.nextFloat() <= ERROR_PERCENTAGE) {
+            throw new RuntimeException();
+        }
+
+        if (lineName.startsWith("A")) {
+            return nightArrival(busStopNumber, lineName);
         }
 
         ArrivalTimes arrivals = new ArrivalTimes();
@@ -38,14 +49,14 @@ public class MockArrivalTimesRepository implements ArrivalTimesRepository {
     private ArrivalTimes.BusArrival getNextBus() {
         ArrivalTimes.BusArrival busArrival = new ArrivalTimes.BusArrival(ArrivalTimes.Status.ESTIMATE);
         busArrival.setDistanceInMeters(100);
-        busArrival.setTimeInMinutes(4);
+        busArrival.setTimeInMinutes(random.nextInt(15));
         return busArrival;
     }
 
     private ArrivalTimes.BusArrival getSecondBus() {
         ArrivalTimes.BusArrival busArrival = new ArrivalTimes.BusArrival(ArrivalTimes.Status.ESTIMATE);
         busArrival.setDistanceInMeters(1428);
-        busArrival.setTimeInMinutes(15);
+        busArrival.setTimeInMinutes(random.nextInt(60)+10);
         return busArrival;
     }
 }
