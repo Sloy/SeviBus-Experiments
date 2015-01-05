@@ -23,7 +23,12 @@ public class TussamArrivalTimesRepository implements ArrivalTimesRepository {
     private static final String URL_SOAP_DINAMICA = "http://www.infobustussam.com:9001/services/dinamica.asmx";
     private static final String BODY_SOAP_TIEMPOS = "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body><GetPasoParada xmlns=\"http://tempuri.org/\"><linea>%1s</linea><parada>%2s</parada><status>1</status></GetPasoParada></soap:Body></soap:Envelope>"; // 2.parada
 
-    @Inject public TussamArrivalTimesRepository() {
+    private final SAXParser saxParser;
+    private final TussamArrivalsSaxHandler tussamSaxHandler;
+
+    @Inject public TussamArrivalTimesRepository(SAXParser saxParser, TussamArrivalsSaxHandler tussamSaxHandler) {
+        this.saxParser = saxParser;
+        this.tussamSaxHandler = tussamSaxHandler;
     }
 
     @Override public ArrivalTimes getArrivalsForBusStopAndLine(Integer busStopNumber, String lineName) {
@@ -39,10 +44,6 @@ public class TussamArrivalTimesRepository implements ArrivalTimesRepository {
     }
 
     private void populateArrivalTimes(ArrivalTimes arrivals, InputStream arrivalsInputStream) throws ParserConfigurationException, SAXException, IOException {
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        SAXParser saxParser = factory.newSAXParser();
-        TussamArrivalsSaxHandler tussamSaxHandler = new TussamArrivalsSaxHandler();
-
         saxParser.parse(arrivalsInputStream, tussamSaxHandler);
 
         TussamArrivalsSaxHandler.TwoBuses buses = tussamSaxHandler.getResult();

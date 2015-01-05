@@ -14,7 +14,8 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module(
-    library = true
+        includes = TussamModule.class,
+        library = true
 )
 public final class RepositoryModule {
 
