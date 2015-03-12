@@ -4,11 +4,14 @@ buildscript {
     }
     dependencies {
         classpath 'me.tatarka:gradle-retrolambda:2.4.1'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1'
     }
 }
 
 apply plugin: 'java'
 apply plugin: 'retrolambda'
+apply plugin: 'jacoco'
+apply plugin: 'com.github.kt3k.coveralls'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -23,4 +26,11 @@ dependencies {
 
 retrolambda {
     javaVersion JavaVersion.VERSION_1_7
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true // coveralls plugin depends on xml format report
+        html.enabled = true
+    }
 }
