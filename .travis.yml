@@ -16,4 +16,4 @@ script:
   ./gradlew build
   
 after_success:
-  - ./gradlew jacocoTestReport coveralls
+  - ./gradlew jacocoTestReport coveralls crashlyticsUploadDistributionDebug

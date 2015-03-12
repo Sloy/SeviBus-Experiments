@@ -25,6 +25,9 @@
             android:name=".presentation.view.activity.BusStopDetailActivity"
             android:theme="@style/SevibusTheme.ToolbarOverlay"
             />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="619aa8ceeeae55fe071504dca6d386a9d346b6a4" />
     </application>
 
 </manifest>

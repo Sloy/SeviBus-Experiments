@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 
 import dagger.ObjectGraph;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 
 public class SevibusApplication extends Application {
 
@@ -11,6 +13,7 @@ public class SevibusApplication extends Application {
 
     @Override public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         buildObjectGraphAndInject();
     }
 
