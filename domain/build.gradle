@@ -4,7 +4,7 @@ buildscript {
     }
     dependencies {
         classpath 'me.tatarka:gradle-retrolambda:2.4.1'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1x'
     }
 }
 
