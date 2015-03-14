@@ -15,7 +15,6 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
-
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
@@ -32,9 +31,9 @@ android {
             minifyEnabled false
         }
         debug {
-            def buildNumber = System.getenv('TRAVIS_BUILD_NUMBER') ?: "0"
-            def buildBranch = System.getenv('TRAVIS_BRANCH') ?: "local"
-            ext.betaDistributionReleaseNotes="In development. Branch $buildBranch, build #$buildNumber"
+            def buildBranch = getCurrentBranch()
+            def buildIdentifier = getBuildIdentifier()
+            ext.betaDistributionReleaseNotes="In development. Branch $buildBranch, build $buildIdentifier"
             ext.betaDistributionGroupAliases="developers"
         }
     }
@@ -85,3 +84,22 @@ def initCrashlyticsPropertiesIfNeeded() {
         }
     }
 }
+
+//region Git and Travis methods
+def getCurrentBranch() {
+    return System.getenv('TRAVIS_BRANCH') ?: getWorkingBranch()
+}
+
+def getWorkingBranch() {
+    return """git rev-parse --abbrev-ref HEAD""".execute().text.trim()
+}
+
+def getBuildIdentifier() {
+    def buildNumber = System.getenv('TRAVIS_BUILD_NUMBER')
+    return buildNumber ? "#"+buildNumber : gitCommitSha()
+}
+
+def gitCommitSha() {
+    return 'git rev-parse --short HEAD'.execute().text.trim()
+}
+//endregion
