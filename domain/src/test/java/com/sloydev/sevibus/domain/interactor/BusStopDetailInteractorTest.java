@@ -1,13 +1,16 @@
 package com.sloydev.sevibus.domain.interactor;
 
 import com.sloydev.sevibus.domain.BusStop;
+import com.sloydev.sevibus.domain.SpyCallback;
 import com.sloydev.sevibus.domain.exception.BusStopNotFoundException;
+import com.sloydev.sevibus.domain.exception.SevibusException;
 import com.sloydev.sevibus.domain.repository.BusStopRepository;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -19,33 +22,32 @@ public class BusStopDetailInteractorTest {
 
     private BusStopDetailInteractor busStopDetailInteractor;
     @Mock private BusStopRepository busStopRepository;
+    @Spy SpyCallback<BusStop> spyCallback;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        busStopDetailInteractor = new BusStopDetailInteractor(busStopRepository);
+        InteractorHandler interactorHandler = new TestInteractorHandler();
+        busStopDetailInteractor = new BusStopDetailInteractor(busStopRepository, interactorHandler);
     }
 
 
     @Test
-    public void busStopReturnedWhenFound() {
+    public void busStopSentThroughCallbackWhenReturnedByRepository() {
         setupRepositoryReturnsValidBusStop();
-        busStopDetailInteractor.loadBusStopDetail(BUS_STOP_NUMBER)
-                .subscribe(busStop -> {
-                    assertThat(busStop.getNumber()).isEqualTo(BUS_STOP_NUMBER);
-                });
+
+        busStopDetailInteractor.loadBusStopDetail(BUS_STOP_NUMBER, spyCallback);
+        BusStop busStopSent = spyCallback.result;
+
+        assertThat(busStopSent).isNotNull();
+        assertThat(busStopSent.getNumber()).isEqualTo(BUS_STOP_NUMBER);
     }
 
 
-    @Test
-    public void errorCalledWhenNotFound() {
+    @Test(expected = SevibusException.class)
+    public void errorThrownWhenNotFound() {
         setupRepositoryNotReturnBusStop();
-        busStopDetailInteractor.loadBusStopDetail(BUS_STOP_NUMBER)
-                .subscribe(busStop -> {
-                    fail("onNext should not be called when bus stop is not found");
-                }, error -> {
-                    assertThat(error).isExactlyInstanceOf(BusStopNotFoundException.class);
-                });
+        busStopDetailInteractor.loadBusStopDetail(BUS_STOP_NUMBER, spyCallback);
     }
 
     private void setupRepositoryReturnsValidBusStop() {
@@ -61,4 +63,6 @@ public class BusStopDetailInteractorTest {
         busStop.setNumber(BUS_STOP_NUMBER);
         return busStop;
     }
+
+
 }

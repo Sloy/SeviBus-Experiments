@@ -1,16 +1,18 @@
 package com.sloydev.sevibus.presentation.presenter;
 
+import com.sloydev.sevibus.domain.ArrivalTimes;
+import com.sloydev.sevibus.domain.BusStop;
+import com.sloydev.sevibus.domain.exception.SevibusException;
 import com.sloydev.sevibus.domain.interactor.ArrivalTimesInteractor;
 import com.sloydev.sevibus.domain.interactor.BusStopDetailInteractor;
+import com.sloydev.sevibus.domain.interactor.Interactor;
 import com.sloydev.sevibus.presentation.model.ArrivalTimesModel;
+import com.sloydev.sevibus.presentation.model.BusStopModel;
 import com.sloydev.sevibus.presentation.model.mapper.ArrivalTimesModelMapper;
 import com.sloydev.sevibus.presentation.model.mapper.BusStopModelMapper;
 import com.sloydev.sevibus.presentation.view.BusStopDetailView;
 
 import javax.inject.Inject;
-
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class BusStopDetailPresenter implements Presenter {
 
@@ -37,24 +39,32 @@ public class BusStopDetailPresenter implements Presenter {
     }
 
     private void loadBusStopDetails() {
-        busStopDetailInteractor.loadBusStopDetail(busStopNumber)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(busStopModelMapper::transform)
-                .subscribe(busStopModel -> busStopDetailView.renderDetails(busStopModel));
+        busStopDetailInteractor.loadBusStopDetail(busStopNumber, new Interactor.Callback<BusStop>() {
+            @Override public void onLoaded(BusStop busStop) {
+                BusStopModel busStopModel = busStopModelMapper.transform(busStop);
+                busStopDetailView.renderDetails(busStopModel);
+            }
+        });
     }
 
     private void loadArrivalTimes() {
         this.showViewLoading();
         busStopDetailView.clearArrivals();
         busStopDetailView.showArrivals();
-        arrivalTimesInteractor.loadArrivals(busStopNumber)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(arrivalTimesModelMapper::transform)
-                .subscribe(arrivalModel -> renderArrival(arrivalModel),
-                        error -> showViewConnectionError(error),
-                        () -> hideViewLoading());
+        arrivalTimesInteractor.loadArrivals(busStopNumber, new Interactor.Callback<ArrivalTimes>() {
+            @Override public void onLoaded(ArrivalTimes arrivalTimes) {
+                ArrivalTimesModel arrivalTimesModel = arrivalTimesModelMapper.transform(arrivalTimes);
+                renderArrival(arrivalTimesModel);
+            }
+        }, new Interactor.ErrorCallback() {
+            @Override public void onError(SevibusException error) {
+                showViewConnectionError(error);
+            }
+        }, new Interactor.CompleteCallback() {
+            @Override public void onCompleted() {
+                hideViewLoading();
+            }
+        });
     }
 
     private void showViewLoading() {
