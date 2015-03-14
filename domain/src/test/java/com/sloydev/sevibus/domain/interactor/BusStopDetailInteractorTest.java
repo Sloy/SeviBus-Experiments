@@ -2,7 +2,7 @@ package com.sloydev.sevibus.domain.interactor;
 
 import com.sloydev.sevibus.domain.BusStop;
 import com.sloydev.sevibus.domain.SpyCallback;
-import com.sloydev.sevibus.domain.exception.BusStopNotFoundException;
+import com.sloydev.sevibus.domain.TestInteractorHandler;
 import com.sloydev.sevibus.domain.exception.SevibusException;
 import com.sloydev.sevibus.domain.repository.BusStopRepository;
 
@@ -13,7 +13,6 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 public class BusStopDetailInteractorTest {
@@ -37,7 +36,7 @@ public class BusStopDetailInteractorTest {
         setupRepositoryReturnsValidBusStop();
 
         busStopDetailInteractor.loadBusStopDetail(BUS_STOP_NUMBER, spyCallback);
-        BusStop busStopSent = spyCallback.result;
+        BusStop busStopSent = spyCallback.results.get(0);
 
         assertThat(busStopSent).isNotNull();
         assertThat(busStopSent.getNumber()).isEqualTo(BUS_STOP_NUMBER);
