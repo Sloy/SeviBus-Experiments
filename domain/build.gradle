@@ -24,6 +24,14 @@ dependencies {
     testCompile 'org.assertj:assertj-core:1.7.0'
 }
 
+test {
+    jacoco {
+        excludes  = ['**/*$InjectAdapter.class',
+                     '**/*$ModuleAdapter.class',
+                     '**/*$ViewInjector*.class']
+    }
+}
+
 jacocoTestReport {
     reports {
         xml.enabled = true // coveralls plugin depends on xml format report
