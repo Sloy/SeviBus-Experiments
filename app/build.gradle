@@ -48,12 +48,14 @@ android {
         release {
             minifyEnabled false
             signingConfig signingConfigs.betaConfig
+            ext.betaDistributionReleaseNotesFilePath = "release_notes.md"
+            ext.betaDistributionGroupAliases = "betatesters"
         }
         debug {
             def buildBranch = getCurrentBranch()
             def buildIdentifier = getBuildIdentifier()
-            ext.betaDistributionReleaseNotes="In development. Branch $buildBranch, build $buildIdentifier"
-            ext.betaDistributionGroupAliases="developers"
+            ext.betaDistributionReleaseNotes = "Under development. Branch $buildBranch, build $buildIdentifier"
+            ext.betaDistributionGroupAliases = "developers"
         }
     }
     lintOptions {
@@ -104,9 +106,22 @@ def initCrashlyticsPropertiesIfNeeded() {
     }
 }
 
+task distributeDeveloperBuild << {
+    crashlyticsUploadDistributionDebug.execute()
+}
+
+task distributeBetatesterBuild << {
+    crashlyticsUploadDistributionRelease.execute()
+}
+
 //region Git and Travis methods
 def getCurrentBranch() {
-    return System.getenv('TRAVIS_BRANCH') ?: getWorkingBranch()
+    if (System.getenv('TRAVIS_BRANCH')) {
+        def pullRequest = System.getenv("TRAVIS_PULL_REQUEST")
+        return pullRequest as Boolean ? "[pull-request $pullRequest]" : System.getenv('TRAVIS_BRANCH')
+    } else {
+        return getWorkingBranch()
+    }
 }
 
 def getWorkingBranch() {
@@ -115,7 +130,7 @@ def getWorkingBranch() {
 
 def getBuildIdentifier() {
     def buildNumber = System.getenv('TRAVIS_BUILD_NUMBER')
-    return buildNumber ? "#"+buildNumber : gitCommitSha()
+    return buildNumber ? "#" + buildNumber : gitCommitSha()
 }
 
 def gitCommitSha() {
