@@ -19,9 +19,10 @@ android {
     signingConfigs {
         betaConfig {
             storeFile file('./.signing/keystore-beta.jks')
-            if (project.hasProperty("signing.properties") && new File(project.property("signing.properties")).exists()) {
+            println project.property("signing")
+            if (project.hasProperty("signing") && file(project.property("signing")).exists()) {
                 Properties signingProperties = new Properties()
-                signingProperties.load(new FileInputStream(file(project.property("signing.properties"))))
+                signingProperties.load(new FileInputStream(file(project.property("signing"))))
 
                 keyAlias signingProperties["keyAliasBeta"]
                 keyPassword signingProperties["keyPasswordBeta"]
@@ -46,15 +47,13 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.betaConfig
         }
         debug {
             def buildBranch = getCurrentBranch()
             def buildIdentifier = getBuildIdentifier()
             ext.betaDistributionReleaseNotes="In development. Branch $buildBranch, build $buildIdentifier"
             ext.betaDistributionGroupAliases="developers"
-        }
-        release {
-            signingConfig signingConfigs.betaConfig
         }
     }
     lintOptions {
