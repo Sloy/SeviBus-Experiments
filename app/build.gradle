@@ -16,6 +16,23 @@ repositories {
 }
 
 android {
+    signingConfigs {
+        betaConfig {
+            storeFile file('./.signing/keystore-beta.jks')
+            if (project.hasProperty("signing.properties") && new File(project.property("signing.properties")).exists()) {
+                Properties signingProperties = new Properties()
+                signingProperties.load(new FileInputStream(file(project.property("signing.properties"))))
+
+                keyAlias signingProperties["keyAliasBeta"]
+                keyPassword signingProperties["keyPasswordBeta"]
+                storePassword signingProperties["storePasswordBeta"]
+            } else {
+                keyAlias System.getenv('SIGN_KEY_ALIAS_BETA')
+                keyPassword System.getenv('SIGN_KEY_PASSWORD_BETA')
+                storePassword System.getenv('SIGN_STORE_PASSWORD_BETA')
+            }
+        }
+    }
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
 
@@ -35,6 +52,9 @@ android {
             def buildIdentifier = getBuildIdentifier()
             ext.betaDistributionReleaseNotes="In development. Branch $buildBranch, build $buildIdentifier"
             ext.betaDistributionGroupAliases="developers"
+        }
+        release {
+            signingConfig signingConfigs.betaConfig
         }
     }
     lintOptions {
