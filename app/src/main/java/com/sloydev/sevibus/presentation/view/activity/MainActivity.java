@@ -40,7 +40,7 @@ public class MainActivity extends BaseActivity {
         ButterKnife.inject(this);
     }
 
-    @Override protected void created() {
+    @Override protected void initializePresenter() {
         showAllStops();
     }
 

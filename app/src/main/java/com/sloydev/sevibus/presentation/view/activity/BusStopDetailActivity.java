@@ -47,7 +47,7 @@ public class BusStopDetailActivity extends BaseToolbarActivity implements BusSto
         actionBar.setDisplayShowTitleEnabled(false);
     }
 
-    @Override protected void created() {
+    @Override protected void initializePresenter() {
         Integer busStopNumber = busStopNumberFromIntent();
         presenter.initialize(this, busStopNumber);
     }

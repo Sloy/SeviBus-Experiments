@@ -31,7 +31,7 @@ public abstract class BaseToolbarActivity extends BaseActivity {
 
     protected abstract void setupActionBar(ActionBar actionBar);
 
-    @Override protected abstract void created();
+    @Override protected abstract void initializePresenter();
 
     public Toolbar getToolbar() {
         return toolbar;
